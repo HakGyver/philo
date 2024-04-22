@@ -6,7 +6,7 @@
 #    By: jteste <jteste@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/20 11:42:35 by jteste            #+#    #+#              #
-#    Updated: 2024/04/16 14:32:17 by jteste           ###   ########.fr        #
+#    Updated: 2024/04/22 11:53:41 by jteste           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,10 @@
 NAME		:= philo
 CFLAGS		:= -Wextra -Wall -Werror
 SRCS		:= philo.c \
+				utils.c
 
-OBJS		:= $(SRCS:.c=.o)
+OBJ_DIR		:= tmp
+OBJS		:= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 CC 			= gcc $(CFLAGS)
 
 all: $(NAME)
@@ -53,8 +55,15 @@ $(NAME): $(SRCS) $(OBJS)
 	@$(CC) $(OBJS) -o $(NAME)
 	@echo "\n $(YELLOW)$(NAME) $(GREEN)Created successfully \n$(CLR_RMV)"
 
+$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+	$(CC) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
+
 clean:
 	$(RM) $(OBJS)
+	$(RM) -r $(OBJ_DIR)
 	@echo "$(RED)Deleting $(CYAN)$(NAME) $(CLR_RMV)objs ✔️"
 
 fclean: clean

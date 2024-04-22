@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/16 12:06:16 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/22 12:36:47 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,9 @@
 // bool type, true, false
 # include <limits.h>
 // implementation limits
+
+int		ft_atoi(const char *str);
+bool	check_args(char const **argv);
+bool	all_num(char const *str);
 
 #endif
