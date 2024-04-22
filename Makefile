@@ -6,19 +6,21 @@
 #    By: jteste <jteste@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/20 11:42:35 by jteste            #+#    #+#              #
-#    Updated: 2024/04/22 11:53:41 by jteste           ###   ########.fr        #
+#    Updated: 2024/04/22 17:11:39 by jteste           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 NAME		:= philo
-CFLAGS		:= -Wextra -Wall -Werror
-SRCS		:= philo.c \
-				utils.c
+CFLAGS		:= -Wextra -Wall -Werror -pthread
+SRCS		:= srcs/philo.c \
+				srcs/utils.c \
+				srcs/args_check.c \
+				srcs/init.c
 
-OBJ_DIR		:= tmp
-OBJS		:= $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
+OBJ_DIR		:= srcs/tmp
+OBJS		:= $(addprefix $(OBJ_DIR)/,$(notdir $(SRCS:.c=.o)))
 CC 			= gcc $(CFLAGS)
 
 all: $(NAME)
@@ -32,7 +34,7 @@ GREY		:= \033[0;37m
 
 RM			:= rm -f
 
-$(NAME): $(SRCS) $(OBJS)
+$(NAME): $(OBJS)
 	@echo "$(GREY)    █  ██  █    "
 	@echo "$(GREY)   ██  ██  ██   "
 	@echo "$(GREY)   ██  ██  ██   "
@@ -55,7 +57,7 @@ $(NAME): $(SRCS) $(OBJS)
 	@$(CC) $(OBJS) -o $(NAME)
 	@echo "\n $(YELLOW)$(NAME) $(GREEN)Created successfully \n$(CLR_RMV)"
 
-$(OBJ_DIR)/%.o: %.c | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: srcs/%.c | $(OBJ_DIR)
 	$(CC) -c $< -o $@
 
 $(OBJ_DIR):

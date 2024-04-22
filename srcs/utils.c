@@ -6,11 +6,11 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:53:59 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/22 11:55:01 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/22 13:09:12 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../libs/philo.h"
 
 int	ft_atoi(const char *str)
 {

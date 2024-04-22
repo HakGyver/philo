@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   philo.c                                            :+:      :+:    :+:   */
+/*   args_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/16 12:06:58 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/22 12:57:12 by jteste           ###   ########.fr       */
+/*   Created: 2024/04/22 13:04:17 by jteste            #+#    #+#             */
+/*   Updated: 2024/04/22 13:09:05 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../libs/philo.h"
 
 bool	all_num(char const *str)
 {
@@ -40,14 +40,4 @@ bool	check_args(char const **argv)
 		return (write(2, "Wrong number of times philosophers must eat\n", 44),
 			false);
 	return (true);
-}
-
-int	main(int argc, char const *argv[])
-{
-	if (argc < 5 || argc > 6)
-		return (write(2, "Wrong number of argument\n", 25), EXIT_FAILURE);
-	if (check_args(argv) == false)
-		return (EXIT_FAILURE);
-	printf("all good");
-	return (0);
 }
