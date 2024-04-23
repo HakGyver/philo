@@ -4,6 +4,9 @@
 		"string.h": "c",
 		"philo.h": "c",
 		"stdlib.h": "c",
-		"cstdlib": "c"
+		"cstdlib": "c",
+		"time.h": "c",
+		"time_t.h": "c",
+		"types.h": "c"
 	}
 }

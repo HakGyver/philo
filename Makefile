@@ -6,7 +6,7 @@
 #    By: jteste <jteste@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/20 11:42:35 by jteste            #+#    #+#              #
-#    Updated: 2024/04/22 17:11:39 by jteste           ###   ########.fr        #
+#    Updated: 2024/04/23 14:38:59 by jteste           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,10 +14,10 @@
 
 NAME		:= philo
 CFLAGS		:= -Wextra -Wall -Werror -pthread
-SRCS		:= srcs/philo.c \
+SRCS		:= srcs/main.c \
 				srcs/utils.c \
 				srcs/args_check.c \
-				srcs/init.c
+				# srcs/init.c
 
 OBJ_DIR		:= srcs/tmp
 OBJS		:= $(addprefix $(OBJ_DIR)/,$(notdir $(SRCS:.c=.o)))
