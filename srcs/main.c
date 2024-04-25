@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:06:58 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/23 16:38:59 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/25 17:00:31 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char const *argv[])
 		return (write(2, "Wrong number of arguments\n", 25), EXIT_FAILURE);
 	if (check_args(argv) == false)
 		return (EXIT_FAILURE);
-	base_init(&table, argv);
+	table_init(&table, argv);
 	while (1)
 		printf("all good rn, %lu since launch\n", elapsed_time(table.start_time));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/23 17:11:55 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/25 16:57:32 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,30 @@
 # include <limits.h>
 // implementation limits
 
+typedef struct s_table t_table;
+
 typedef struct s_philo
 {
+	int				philo_id;
 	pthread_t		thread;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
-	int				philo_id;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
-	int				must_eat;
 	int				meals_eaten;
+	size_t			last_meal;
 	t_table			*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	unsigned int	nb_of_philos;
 	size_t			start_time;
-	t_philo			*philos;
+	int				nb_of_philos;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	int				must_eat;
+	bool			death;
+	pthread_t		supervisor;
+	t_philo			**philos;
 }	t_table;
 
 int		ft_atoi(const char *str);
