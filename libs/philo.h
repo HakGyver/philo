@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/29 11:29:04 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/29 12:33:44 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,17 @@
 # define TIME_TO_SLEEP "Wrong argument => time to sleep"
 # define MEAL_COUNT "Wrong argument => number of times philosophers must eat"
 
+/* -------- Colors -------- */
+
+# define RESET   "\x1B[0m"
+# define RED     "\x1B[31m"
+# define GREEN   "\x1B[32m"
+# define YELLOW  "\x1B[33m"
+# define BLUE    "\x1B[34m"
+# define MAGENTA "\x1B[35m"
+# define CYAN    "\x1B[36m"
+# define WHITE   "\x1B[37m"
+
 /* -------- Structures -------- */
 
 typedef struct s_table	t_table;
@@ -55,28 +66,30 @@ typedef struct s_philo
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	*fork_right;
 	int				meals_eaten;
-	size_t			last_meal;
+	time_t			last_meal;
 	t_table			*table;
 }	t_philo;
 
 typedef struct s_table
 {
-	size_t			start_time;
+	time_t			start_time;
 	int				nb_of_philos;
-	size_t			time_to_die;
-	size_t			time_to_eat;
-	size_t			time_to_sleep;
+	time_t			time_to_die;
+	time_t			time_to_eat;
+	time_t			time_to_sleep;
 	int				must_eat;
 	bool			death;
 	pthread_t		supervisor;
+	pthread_mutex_t	write_lock;
+	pthread_mutex_t	death_lock;
 	t_philo			**philos;
 }	t_table;
 
 /* -------- Functions -------- */
 
 // Time (time.c)
-size_t	start_time(void);
-size_t	elapsed_time(size_t start);
+time_t	start_time(void);
+time_t	elapsed_time(time_t start);
 
 // Free & Error (error_and_free_.c)
 int		error_exit(char *str_error, t_table *table);
