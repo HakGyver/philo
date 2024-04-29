@@ -6,12 +6,14 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/25 16:57:32 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/29 11:29:04 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
+
+/* -------- Includes -------- */
 
 # include <sys/time.h>
 // gettimeofday
@@ -32,7 +34,19 @@
 # include <limits.h>
 // implementation limits
 
-typedef struct s_table t_table;
+/* -------- Error strings -------- */
+
+# define MALLOC "Failled to allocate memory"
+# define ARG_COUNT "Wrong number of argument"
+# define PHILO_COUNT "Wrong argument => number of philosopher"
+# define TIME_TO_DIE "Wrong argument => time to die"
+# define TIME_TO_EAT "Wrong argument => time to eat"
+# define TIME_TO_SLEEP "Wrong argument => time to sleep"
+# define MEAL_COUNT "Wrong argument => number of times philosophers must eat"
+
+/* -------- Structures -------- */
+
+typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
@@ -58,11 +72,24 @@ typedef struct s_table
 	t_philo			**philos;
 }	t_table;
 
-int		ft_atoi(const char *str);
-bool	check_args(char const **argv);
-bool	all_num(char const *str);
-void	base_init(t_table *table, char const **argv);
+/* -------- Functions -------- */
+
+// Time (time.c)
 size_t	start_time(void);
 size_t	elapsed_time(size_t start);
+
+// Free & Error (error_and_free_.c)
+int		error_exit(char *str_error, t_table *table);
+void	ft_free_all(t_table *table);
+
+// Initialization (init.c)
+bool	check_args(char const **argv, t_table *table);
+bool	table_init(char const **argv, t_table *table);
+bool	table_alloc(t_table *table);
+
+// Utilities (utils.c)
+int		ft_atoi(const char *str);
+bool	all_num(char const *str);
+size_t	ft_strlen(char *str);
 
 #endif
