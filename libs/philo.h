@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/30 10:19:01 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:02:53 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@
 # define TIME_TO_SLEEP "Wrong argument => time to sleep"
 # define MEAL_COUNT "Wrong argument => number of times philosophers must eat"
 # define MUTEX	"Failed to initialize mutex"
+# define GTOD "Error : Gettimeofday() Failed"
+# define USLEEP "Error : Usleep() Failed"
 
 /* -------- Colors -------- */
 
@@ -91,6 +93,7 @@ typedef struct s_table
 // Time (time.c)
 time_t	start_time(void);
 time_t	elapsed_time(time_t start);
+void	better_usleep(time_t milliseconds);
 
 // Free & Error (error_and_free_.c)
 int		error_exit(char *str_error, t_table *table);

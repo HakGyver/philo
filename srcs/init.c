@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:40:40 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/30 10:16:22 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:16:27 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ bool	philo_init(t_table *table)
 		table->philos[i]->table = table;
 		if (pthread_mutex_init(&table->philos[i]->fork, NULL) != 0)
 		{
+			pthread_mutex_destroy(&table->death_lock);
+			pthread_mutex_destroy(&table->write_lock);
 			while (i--)
 				pthread_mutex_destroy(&table->philos[i]->fork);
 			return (error_exit(MUTEX, table));
