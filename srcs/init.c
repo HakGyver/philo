@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:40:40 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/29 12:41:29 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:16:22 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,12 @@ bool	table_init(char const **argv, t_table *table)
 	if (table_alloc(table))
 		return (true);
 	if (pthread_mutex_init(&table->death_lock, NULL) != 0)
-		return (error_exit("MUTEX INIT", table));
+		return (error_exit(MUTEX, table));
 	if (pthread_mutex_init(&table->write_lock, NULL) != 0)
-		return (error_exit("MUTEX INIT", table));
+	{
+		pthread_mutex_destroy(&table->death_lock);
+		return (error_exit(MUTEX, table));
+	}
 	return (false);
 }
 
@@ -54,11 +57,40 @@ bool	table_alloc(t_table *table)
 
 	i = 0;
 	table->philos = malloc(table->nb_of_philos * sizeof(t_philo));
+	if (!table->philos)
+		return (error_exit(MALLOC, table));
 	while (i < table->nb_of_philos)
 	{
 		table->philos[i] = malloc(1 * sizeof(t_philo));
 		if (!table->philos[i])
 			return (error_exit(MALLOC, table));
+		i++;
+	}
+	return (false);
+}
+
+bool	philo_init(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	while (i < table->nb_of_philos)
+	{
+		table->philos[i]->last_meal = start_time();
+		table->philos[i]->id = i + 1;
+		table->philos[i]->meals_eaten = 0;
+		table->philos[i]->table = table;
+		if (pthread_mutex_init(&table->philos[i]->fork, NULL) != 0)
+		{
+			while (i--)
+				pthread_mutex_destroy(&table->philos[i]->fork);
+			return (error_exit(MUTEX, table));
+		}
+		if (i == 0)
+			table->philos[i]->fork_left = &table->philos
+			[table->nb_of_philos - 1]->fork;
+		else
+			table->philos[i]->fork_left = &table->philos[i - 1]->fork;
 		i++;
 	}
 	return (false);

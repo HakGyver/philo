@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/29 12:33:44 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:19:01 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,14 @@
 
 /* -------- Error strings -------- */
 
-# define MALLOC "Failled to allocate memory"
+# define MALLOC "Failed to allocate memory"
 # define ARG_COUNT "Wrong number of argument"
 # define PHILO_COUNT "Wrong argument => number of philosopher"
 # define TIME_TO_DIE "Wrong argument => time to die"
 # define TIME_TO_EAT "Wrong argument => time to eat"
 # define TIME_TO_SLEEP "Wrong argument => time to sleep"
 # define MEAL_COUNT "Wrong argument => number of times philosophers must eat"
+# define MUTEX	"Failed to initialize mutex"
 
 /* -------- Colors -------- */
 
@@ -61,10 +62,10 @@ typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
-	int				philo_id;
+	int				id;
 	pthread_t		thread;
 	pthread_mutex_t	*fork_left;
-	pthread_mutex_t	*fork_right;
+	pthread_mutex_t	fork;
 	int				meals_eaten;
 	time_t			last_meal;
 	t_table			*table;
@@ -94,11 +95,13 @@ time_t	elapsed_time(time_t start);
 // Free & Error (error_and_free_.c)
 int		error_exit(char *str_error, t_table *table);
 void	ft_free_all(t_table *table);
+void	destroy_mutex(t_table *table);
 
 // Initialization (init.c)
 bool	check_args(char const **argv, t_table *table);
 bool	table_init(char const **argv, t_table *table);
 bool	table_alloc(t_table *table);
+bool	philo_init(t_table *table);
 
 // Utilities (utils.c)
 int		ft_atoi(const char *str);

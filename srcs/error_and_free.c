@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:25 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/29 11:14:25 by jteste           ###   ########.fr       */
+/*   Updated: 2024/04/30 10:05:52 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,19 @@ void	ft_free_all(t_table *table)
 			i++;
 		}
 		free(table->philos);
+	}
+}
+
+void	destroy_mutex(t_table *table)
+{
+	int	i;
+
+	i = 0;
+	pthread_mutex_destroy(&table->death_lock);
+	pthread_mutex_destroy(&table->write_lock);
+	while (i < table->nb_of_philos)
+	{
+		pthread_mutex_destroy(&table->philos[i]->fork);
+		i++;
 	}
 }
