@@ -6,13 +6,13 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:25 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/30 10:05:52 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/02 11:08:57 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/philo.h"
 
-int	error_exit(char *str_error, t_table *table)
+bool	error_exit(char *str_error, t_table *table)
 {
 	ft_free_all(table);
 	if (str_error)
@@ -21,7 +21,7 @@ int	error_exit(char *str_error, t_table *table)
 		write(2, str_error, ft_strlen(str_error));
 		write(2, "\n", 1);
 	}
-	return (EXIT_FAILURE);
+	return (true);
 }
 
 void	ft_free_all(t_table *table)

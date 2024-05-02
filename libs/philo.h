@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/30 12:02:53 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/02 13:20:49 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@
 # define MUTEX	"Failed to initialize mutex"
 # define GTOD "Error : Gettimeofday() Failed"
 # define USLEEP "Error : Usleep() Failed"
+# define THREAD_CREATE "Failed to create thread"
+# define THREAD_JOIN "Failed to join thread"
 
 /* -------- Colors -------- */
 
@@ -82,10 +84,11 @@ typedef struct s_table
 	time_t			time_to_sleep;
 	int				must_eat;
 	bool			death;
-	pthread_t		supervisor;
+	pthread_t		overseer;
 	pthread_mutex_t	write_lock;
 	pthread_mutex_t	death_lock;
 	t_philo			**philos;
+	int				index;
 }	t_table;
 
 /* -------- Functions -------- */
@@ -96,11 +99,11 @@ time_t	elapsed_time(time_t start);
 void	better_usleep(time_t milliseconds);
 
 // Free & Error (error_and_free_.c)
-int		error_exit(char *str_error, t_table *table);
+bool	error_exit(char *str_error, t_table *table);
 void	ft_free_all(t_table *table);
 void	destroy_mutex(t_table *table);
 
-// Initialization (init.c)
+// Initialization (inits.c)
 bool	check_args(char const **argv, t_table *table);
 bool	table_init(char const **argv, t_table *table);
 bool	table_alloc(t_table *table);
@@ -110,5 +113,13 @@ bool	philo_init(t_table *table);
 int		ft_atoi(const char *str);
 bool	all_num(char const *str);
 size_t	ft_strlen(char *str);
+
+// Threads (threads.c)
+bool	threads_creation(t_table *table);
+bool	threads_join(t_table *table);
+
+// Routines (routines.c)
+void	*philo_routine(void *arg);
+void	*overseer_routine(void *arg);
 
 #endif
