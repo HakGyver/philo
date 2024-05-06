@@ -6,14 +6,16 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:40:40 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/02 13:13:43 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/06 11:55:04 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libs/philo.h"
 
-bool	check_args(char const **argv, t_table *table)
+bool	check_args(int argc, char const **argv, t_table *table)
 {
+	if (argc < 5 || argc > 6)
+		return (error_exit(ARG_COUNT, table));
 	if (ft_atoi(argv[1]) <= 0 || all_num(argv[1]))
 		return (error_exit(PHILO_COUNT, table));
 	if (ft_atoi(argv[2]) <= 0 || all_num(argv[2]))

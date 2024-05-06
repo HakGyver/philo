@@ -6,7 +6,7 @@
 #    By: jteste <jteste@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/20 11:42:35 by jteste            #+#    #+#              #
-#    Updated: 2024/05/02 13:12:11 by jteste           ###   ########.fr        #
+#    Updated: 2024/05/06 15:30:07 by jteste           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ SRCS		:= srcs/main.c \
 				srcs/error_and_free.c \
 				srcs/time.c \
 				srcs/threads.c \
-				srcs/routines.c
+				srcs/philo_routine.c \
+				srcs/overseer_routine.c
 
 OBJ_DIR		:= srcs/tmp
 OBJS		:= $(addprefix $(OBJ_DIR)/,$(notdir $(SRCS:.c=.o)))
@@ -34,11 +35,13 @@ GREEN		:= \033[1;32m
 YELLOW		:= \033[1;33m
 CYAN 		:= \033[1;36m
 GREY		:= \033[0;37m
+RED_UL			:= \033[4;31m
 
 RM			:= rm -f
 
 $(NAME): $(OBJS)
-	@echo "$(GREY)    █  ██  █    "
+	@$(CC) $(OBJS) -o $(NAME)
+	@echo "\n$(GREY)    █  ██  █    "
 	@echo "$(GREY)   ██  ██  ██   "
 	@echo "$(GREY)   ██  ██  ██   "
 	@echo "$(GREY)  ███  ██  ███  "
@@ -53,13 +56,11 @@ $(NAME): $(OBJS)
 	@echo "$(GREY)      ████      $(RED)  ▄████▀        ███    █▀    █▀   █████▄▄██  ▀██████▀ "
 	@echo "$(GREY)      ████       $(RED)                                ▀                    "
 	@echo "$(GREY)      ████       ▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄"
-	@echo "$(GREY)      ████      "
-	@echo "$(GREY)      ████      "
+	@echo "$(GREY)      ████      	┏┓┳┓┏┓┏┓┏┳┓┏┓┳┓  ┏┓┳┳┏┓┏┓┏┓┏┓┏┓┏┓┳┳┓ ┓ ┓┏"
+	@echo "$(GREY)      ████      	┃ ┣┫┣ ┣┫ ┃ ┣ ┃┃  ┗┓┃┃┃ ┃ ┣ ┗┓┗┓┣ ┃┃┃ ┃ ┗┫"
+	@echo "$(GREY)     ██████     	┗┛┛┗┗┛┛┗ ┻ ┗┛┻┛  ┗┛┗┛┗┛┗┛┗┛┗┛┗┛┻ ┗┛┗┛┗┛┗┛"
 	@echo "$(GREY)     ██████     "
-	@echo "$(GREY)     ██████     "
-	@$(CC) $(OBJS) -o $(NAME)
-	@echo "\n $(YELLOW)$(NAME) $(GREEN)Created successfully \n$(CLR_RMV)"
-
+	@echo "\n$(RED)Usage: $(GREY)./philo nb_of_philo time_to_die time_to_eat time_to_sleep [nb_of_meal]$(CLR_RMV)\n"
 $(OBJ_DIR)/%.o: srcs/%.c | $(OBJ_DIR)
 	$(CC) -c $< -o $@
 

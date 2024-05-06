@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/02 13:20:49 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:27:03 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,61 @@
 # define TIME_TO_DIE "Wrong argument => time to die"
 # define TIME_TO_EAT "Wrong argument => time to eat"
 # define TIME_TO_SLEEP "Wrong argument => time to sleep"
-# define MEAL_COUNT "Wrong argument => number of times philosophers must eat"
+# define MEAL_COUNT "Wrong argument => number of time philosophers must eat"
 # define MUTEX	"Failed to initialize mutex"
 # define GTOD "Error : Gettimeofday() Failed"
 # define USLEEP "Error : Usleep() Failed"
 # define THREAD_CREATE "Failed to create thread"
 # define THREAD_JOIN "Failed to join thread"
 
+/* -------- Philo States -------- */
+
+//Strings
+# define SLEEP "is sleeping"
+# define THINK "is thinking"
+# define EAT "is eating"
+# define FORK "has taken a fork"
+# define DEATH "died"
+
+//Flags
+# define I_SLEEP 0
+# define I_THINK 1
+# define I_EAT 2
+# define I_FORK 3
+# define I_DEATH 4
+
 /* -------- Colors -------- */
 
-# define RESET   "\x1B[0m"
-# define RED     "\x1B[31m"
-# define GREEN   "\x1B[32m"
-# define YELLOW  "\x1B[33m"
-# define BLUE    "\x1B[34m"
-# define MAGENTA "\x1B[35m"
-# define CYAN    "\x1B[36m"
-# define WHITE   "\x1B[37m"
+// Regulars
+# define RESET          "\x1B[0m"
+# define BLACK          "\x1B[0;30m"
+# define RED            "\x1B[0;31m"
+# define GREEN          "\x1B[0;32m"
+# define YELLOW         "\x1B[0;33m"
+# define BLUE           "\x1B[0;34m"
+# define MAGENTA        "\x1B[0;35m"
+# define CYAN           "\x1B[0;36m"
+# define WHITE          "\x1B[0;37m"
+
+// Bolds
+# define B_BLACK   "\x1B[1;30m"
+# define B_RED     "\x1B[1;31m"
+# define B_GREEN   "\x1B[1;32m"
+# define B_YELLOW  "\x1B[1;33m"
+# define B_BLUE    "\x1B[1;34m"
+# define B_MAGENTA "\x1B[1;35m"
+# define B_CYAN    "\x1B[1;36m"
+# define B_WHITE   "\x1B[1;37m"
+
+// Backgrounds
+# define BLACK_BG       "\x1B[40m"
+# define RED_BG         "\x1B[41m"
+# define GREEN_BG       "\x1B[42m"
+# define YELLOW_BG      "\x1B[43m"
+# define BLUE_BG        "\x1B[44m"
+# define MAGENTA_BG     "\x1B[45m"
+# define CYAN_BG        "\x1B[46m"
+# define WHITE_BG       "\x1B[47m"
 
 /* -------- Structures -------- */
 
@@ -104,7 +142,7 @@ void	ft_free_all(t_table *table);
 void	destroy_mutex(t_table *table);
 
 // Initialization (inits.c)
-bool	check_args(char const **argv, t_table *table);
+bool	check_args(int argc, char const **argv, t_table *table);
 bool	table_init(char const **argv, t_table *table);
 bool	table_alloc(t_table *table);
 bool	philo_init(t_table *table);
@@ -113,13 +151,18 @@ bool	philo_init(t_table *table);
 int		ft_atoi(const char *str);
 bool	all_num(char const *str);
 size_t	ft_strlen(char *str);
+void	display_state(int state, t_philo *philo);
+bool	death_check(t_philo *philo);
 
 // Threads (threads.c)
 bool	threads_creation(t_table *table);
 bool	threads_join(t_table *table);
 
-// Routines (routines.c)
+// Routines (philo_routine.c, overseer_routine.c)
 void	*philo_routine(void *arg);
 void	*overseer_routine(void *arg);
+void	meal_time(t_philo *philo);
+void	bed_time(t_philo *philo);
+void	reflexion_time(t_philo *philo);
 
 #endif

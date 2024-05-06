@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:53:59 by jteste            #+#    #+#             */
-/*   Updated: 2024/04/29 11:37:09 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/06 14:48:01 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,43 @@ size_t	ft_strlen(char *str)
 	while (str[i])
 		i++;
 	return (i);
+}
+
+void	display_state(int state, t_philo *philo)
+{
+	time_t	time;
+
+	pthread_mutex_lock(&philo->table->write_lock);
+	time = elapsed_time(philo->table->start_time);
+	if (!death_check(philo))
+	{
+		if (state == I_SLEEP)
+			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
+				B_GREEN, philo->id, B_CYAN, SLEEP, RESET);
+		else if (state == I_THINK)
+			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
+				B_GREEN, philo->id, B_MAGENTA, THINK, RESET);
+		else if (state == I_EAT)
+			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
+				B_GREEN, philo->id, B_YELLOW, EAT, RESET);
+		else if (state == I_FORK)
+			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
+				B_GREEN, philo->id, B_WHITE, FORK, RESET);
+		else if (state == I_DEATH)
+			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
+				B_GREEN, philo->id, B_RED, DEATH, RESET);
+	}
+	pthread_mutex_unlock(&philo->table->write_lock);
+}
+
+bool	death_check(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->death_lock);
+	if (philo->table->death)
+	{
+		pthread_mutex_unlock(&philo->table->death_lock);
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->table->death_lock);
+	return (false);
 }
