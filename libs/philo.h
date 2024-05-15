@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/15 09:56:11 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 13:19:30 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,5 +171,6 @@ void	reflexion_time(t_philo *philo);
 bool	check_meals(t_table *table);
 bool	check_if_philo_is_dead(t_table *table);
 bool	is_philo_dead(t_philo *philo);
+void	handle_one_philo(t_philo *philo);
 
 #endif

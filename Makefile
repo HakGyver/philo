@@ -6,14 +6,14 @@
 #    By: jteste <jteste@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/20 11:42:35 by jteste            #+#    #+#              #
-#    Updated: 2024/05/15 12:08:26 by jteste           ###   ########.fr        #
+#    Updated: 2024/05/15 13:37:11 by jteste           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .SILENT:
 
 NAME		:= philo
-CFLAGS		:= -Wextra -Wall -Werror -pthread
+CFLAGS		:= -Wextra -Wall -Werror -pthread -o3
 SRCS		:= srcs/main.c \
 				srcs/utils.c \
 				srcs/inits.c \

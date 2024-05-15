@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:53:59 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/15 11:59:19 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 13:35:38 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ void	display_state(int state, t_philo *philo)
 	time = start_time() - philo->table->start_time;
 	if (!death_check(philo))
 	{
-		if (state == I_SLEEP)
+		if (state == I_SLEEP && !death_check(philo))
 			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
 				B_GREEN, philo->id, B_CYAN, SLEEP, RESET);
-		else if (state == I_THINK)
+		else if (state == I_THINK && !death_check(philo))
 			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
 				B_GREEN, philo->id, B_MAGENTA, THINK, RESET);
-		else if (state == I_EAT)
+		else if (state == I_EAT && !death_check(philo))
 			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
 				B_GREEN, philo->id, B_YELLOW, EAT, RESET);
-		else if (state == I_FORK)
+		else if (state == I_FORK && !death_check(philo))
 			printf("%s[%lums]%s %s%d%s %s%s\n", B_WHITE, time, RESET,
 				B_GREEN, philo->id, B_WHITE, FORK, RESET);
 		else if (state == I_DEATH)
