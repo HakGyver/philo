@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 10:58:25 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/02 11:08:57 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 11:03:21 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ bool	error_exit(char *str_error, t_table *table)
 	ft_free_all(table);
 	if (str_error)
 	{
-		write(2, "Error : ", 8);
-		write(2, str_error, ft_strlen(str_error));
-		write(2, "\n", 1);
+		(void)!write(2, "Error : ", 8);
+		(void)!write(2, str_error, ft_strlen(str_error));
+		(void)!write(2, "\n", 1);
 	}
 	return (true);
 }
@@ -50,7 +50,10 @@ void	destroy_mutex(t_table *table)
 	pthread_mutex_destroy(&table->write_lock);
 	while (i < table->nb_of_philos)
 	{
-		pthread_mutex_destroy(&table->philos[i]->fork);
+		if (table->philos[i]->is_fork_init)
+			pthread_mutex_destroy(&table->philos[i]->fork);
+		if (table->philos[i]->is_meal_lock_init)
+			pthread_mutex_destroy(&table->philos[i]->meal_lock);
 		i++;
 	}
 }

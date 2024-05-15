@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/24 18:00:29 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/06 14:27:03 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 09:56:11 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,11 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*fork_left;
 	pthread_mutex_t	fork;
+	bool			is_fork_init;
+	pthread_mutex_t	meal_lock;
+	bool			is_meal_lock_init;
 	int				meals_eaten;
+	bool			is_eating;
 	time_t			last_meal;
 	t_table			*table;
 }	t_philo;
@@ -164,5 +168,8 @@ void	*overseer_routine(void *arg);
 void	meal_time(t_philo *philo);
 void	bed_time(t_philo *philo);
 void	reflexion_time(t_philo *philo);
+bool	check_meals(t_table *table);
+bool	check_if_philo_is_dead(t_table *table);
+bool	is_philo_dead(t_philo *philo);
 
 #endif

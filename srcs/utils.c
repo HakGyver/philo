@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 11:53:59 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/06 14:48:01 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 11:59:19 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	display_state(int state, t_philo *philo)
 	time_t	time;
 
 	pthread_mutex_lock(&philo->table->write_lock);
-	time = elapsed_time(philo->table->start_time);
+	time = start_time() - philo->table->start_time;
 	if (!death_check(philo))
 	{
 		if (state == I_SLEEP)

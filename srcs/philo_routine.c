@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 10:23:41 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/06 15:30:45 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 12:19:08 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	if (philo->id % 2 == 0)
-		better_usleep(1);
+		better_usleep(10);
 	while (!death_check(philo))
 	{
 		if (!death_check(philo))
@@ -35,12 +35,22 @@ void	meal_time(t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork);
 	display_state(I_FORK, philo);
+	if (philo->table->nb_of_philos == 1)
+	{
+		better_usleep(philo->table->time_to_die);
+		pthread_mutex_unlock(&philo->fork);
+		return ;
+	}
 	pthread_mutex_lock(philo->fork_left);
 	display_state(I_FORK, philo);
+	philo->is_eating = true;
 	display_state(I_EAT, philo);
+	pthread_mutex_lock(&philo->meal_lock);
 	philo->last_meal = start_time();
 	philo->meals_eaten++;
+	pthread_mutex_unlock(&philo->meal_lock);
 	better_usleep(philo->table->time_to_eat);
+	philo->is_eating = false;
 	pthread_mutex_unlock(&philo->fork);
 	pthread_mutex_unlock(philo->fork_left);
 	return ;

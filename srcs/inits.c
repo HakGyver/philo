@@ -6,7 +6,7 @@
 /*   By: jteste <jteste@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 14:40:40 by jteste            #+#    #+#             */
-/*   Updated: 2024/05/06 11:55:04 by jteste           ###   ########.fr       */
+/*   Updated: 2024/05/15 12:35:33 by jteste           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ bool	check_args(int argc, char const **argv, t_table *table)
 
 bool	table_init(char const **argv, t_table *table)
 {
-	table->start_time = start_time();
 	table->nb_of_philos = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
@@ -50,6 +49,7 @@ bool	table_init(char const **argv, t_table *table)
 		pthread_mutex_destroy(&table->death_lock);
 		return (error_exit(MUTEX, table));
 	}
+	table->start_time = start_time();
 	return (false);
 }
 
@@ -65,7 +65,10 @@ bool	table_alloc(t_table *table)
 	{
 		table->philos[i] = malloc(1 * sizeof(t_philo));
 		if (!table->philos[i])
+		{
+			ft_free_all(table);
 			return (error_exit(MALLOC, table));
+		}
 		i++;
 	}
 	return (false);
@@ -83,13 +86,11 @@ bool	philo_init(t_table *table)
 		table->philos[i]->meals_eaten = 0;
 		table->philos[i]->table = table;
 		if (pthread_mutex_init(&table->philos[i]->fork, NULL) != 0)
-		{
-			pthread_mutex_destroy(&table->death_lock);
-			pthread_mutex_destroy(&table->write_lock);
-			while (i--)
-				pthread_mutex_destroy(&table->philos[i]->fork);
-			return (error_exit(MUTEX, table));
-		}
+			return (destroy_mutex(table), error_exit(MUTEX, table));
+		table->philos[i]->is_fork_init = true;
+		if (pthread_mutex_init(&table->philos[i]->meal_lock, NULL) != 0)
+			return (destroy_mutex(table), error_exit(MUTEX, table));
+		table->philos[i]->is_meal_lock_init = true;
 		if (i == 0)
 			table->philos[i]->fork_left = &table->philos
 			[table->nb_of_philos - 1]->fork;
